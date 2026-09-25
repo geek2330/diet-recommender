@@ -8,15 +8,8 @@ import { searchFoods, getFoodNutrition, findFoodAlternatives } from '../lib/nutr
  * Exported as default for Express preview and Vercel Serverless compatibility.
  */
 export default async function handler(req, res) {
-  // Support positive API health check probe on /api/mcp if requested
-  const isHealthCheck =
-    Boolean(req.headers['x-health-check']) ||
-    (req.url && (req.url.includes('health') || req.url.includes('check') || req.url.includes('status'))) ||
-    (req.query && (req.query.health !== undefined || req.query.check !== undefined || req.query.status !== undefined)) ||
-    (typeof req.headers['user-agent'] === 'string' &&
-      /(health|probe|googlehc|uptime|monitor)/i.test(req.headers['user-agent']));
-
-  if (isHealthCheck && req.method !== 'POST') {
+  // Support positive API health check and status on GET / HEAD requests to /api/mcp
+  if (req.method === 'GET' || req.method === 'HEAD') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(
       JSON.stringify({
@@ -24,7 +17,13 @@ export default async function handler(req, res) {
         healthy: true,
         service: 'diet_server',
         version: '1.0.0',
-        mcp: true,
+        endpoint: '/api/mcp',
+        transport: 'StreamableHTTP',
+        tools: [
+          'g8_search_foods',
+          'g8_get_food_nutrition',
+          'g8_find_food_alternatives',
+        ],
         timestamp: new Date().toISOString(),
       })
     );

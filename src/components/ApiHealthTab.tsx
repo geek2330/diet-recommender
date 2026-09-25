@@ -48,20 +48,12 @@ export const ApiHealthTab: React.FC<ApiHealthTabProps> = ({ theme }) => {
       message: 'Primary API Health Check endpoint (Vercel & Express)',
     },
     {
-      path: '/health',
+      path: '/api/mcp',
       method: 'GET',
       status: null,
       latencyMs: null,
       healthy: null,
-      message: 'Root health check route for monitoring probes',
-    },
-    {
-      path: '/api/mcp?health=1',
-      method: 'GET',
-      status: null,
-      latencyMs: null,
-      healthy: null,
-      message: 'MCP Streamable HTTP server health probe',
+      message: 'MCP Streamable HTTP server health & status probe',
     },
     {
       path: '/api/mcp (ping)',
@@ -70,14 +62,6 @@ export const ApiHealthTab: React.FC<ApiHealthTabProps> = ({ theme }) => {
       latencyMs: null,
       healthy: null,
       message: 'MCP JSON-RPC protocol ping probe',
-    },
-    {
-      path: '/api/nutrition/search?query=apple',
-      method: 'GET',
-      status: null,
-      latencyMs: null,
-      healthy: null,
-      message: 'Upstream USDA FoodData Central connectivity',
     },
   ]);
 

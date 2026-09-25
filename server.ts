@@ -5,6 +5,11 @@ import { fileURLToPath } from 'url';
 import mcpHandler from './api/mcp.js';
 import healthHandler from './api/health.js';
 import { searchFoods, getFoodNutrition, findFoodAlternatives } from './lib/nutrition.js';
+import {
+  getDailyMealStructure,
+  getMealRecommendations,
+  evaluateNutrientBalance,
+} from './lib/nutribalance.js';
 import { GoogleGenAI } from '@google/genai';
 
 dotenv.config();
@@ -67,6 +72,39 @@ async function startServer() {
       res.json(data);
     } catch (err: any) {
       const fallback = await findFoodAlternatives('apple', 'mediterranean', 10);
+      res.json(fallback);
+    }
+  });
+
+  // NutriBalance MCP Core Endpoints: Meal Structure & Meal Recommendations
+  app.all(['/api/nutribalance/meal-structure', '/api/nutribalance/structure'], async (req, res) => {
+    try {
+      const params = req.method === 'POST' ? req.body || {} : req.query || {};
+      const structure = getDailyMealStructure(params);
+      res.json(structure);
+    } catch (err: any) {
+      const fallback = getDailyMealStructure();
+      res.json(fallback);
+    }
+  });
+
+  app.all(['/api/nutribalance/recommend-meals', '/api/nutribalance/recommendations'], async (req, res) => {
+    try {
+      const params = req.method === 'POST' ? req.body || {} : req.query || {};
+      const recommendations = getMealRecommendations(params);
+      res.json(recommendations);
+    } catch (err: any) {
+      const fallback = getMealRecommendations();
+      res.json(fallback);
+    }
+  });
+
+  app.post('/api/nutribalance/evaluate-balance', async (req, res) => {
+    try {
+      const report = evaluateNutrientBalance(req.body || {});
+      res.json(report);
+    } catch (err: any) {
+      const fallback = evaluateNutrientBalance({ meals: [] });
       res.json(fallback);
     }
   });

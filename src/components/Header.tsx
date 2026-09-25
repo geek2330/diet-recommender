@@ -54,11 +54,11 @@ export const Header: React.FC<HeaderProps> = ({
                   NutriGuide
                 </span>
                 <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-                  AI + MCP Server
+                  NutriBalance MCP Active
                 </span>
               </div>
               <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'} hidden sm:block`}>
-                Evidence-Based Diet Planning, Daily Hydration & API Health Engine
+                NutriBalance Daily Meal Structure, Recommendations & API Health Engine
               </p>
             </div>
           </div>

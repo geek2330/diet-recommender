@@ -19,7 +19,14 @@ export default function handler(req, res) {
         'g8_search_foods',
         'g8_get_food_nutrition',
         'g8_find_food_alternatives',
+        'nutribalance_get_daily_meal_structure',
+        'nutribalance_recommend_meals',
+        'nutribalance_evaluate_balance',
       ],
+      nutribalance: {
+        status: 'online',
+        features: ['daily_meal_structure', 'meal_recommendations', 'nutrient_balance_evaluation'],
+      },
     },
     upstream: {
       provider: 'USDA FoodData Central',
@@ -32,6 +39,9 @@ export default function handler(req, res) {
       details: '/api/nutrition/details',
       alternatives: '/api/nutrition/alternatives',
       recommend_plan: '/api/recommend-plan',
+      nutribalance_meal_structure: '/api/nutribalance/meal-structure',
+      nutribalance_recommend_meals: '/api/nutribalance/recommend-meals',
+      nutribalance_evaluate_balance: '/api/nutribalance/evaluate-balance',
     },
   };
 

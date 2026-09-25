@@ -26,6 +26,18 @@
       "destination": "/api/recommend-plan.js"
     },
     {
+      "source": "/api/nutribalance/meal-structure",
+      "destination": "/api/nutribalance/meal-structure.js"
+    },
+    {
+      "source": "/api/nutribalance/recommend-meals",
+      "destination": "/api/nutribalance/recommend-meals.js"
+    },
+    {
+      "source": "/api/nutribalance/evaluate-balance",
+      "destination": "/api/nutribalance/evaluate-balance.js"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }

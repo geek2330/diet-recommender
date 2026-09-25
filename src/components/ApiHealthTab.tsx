@@ -268,7 +268,7 @@ export const ApiHealthTab: React.FC<ApiHealthTabProps> = ({ theme }) => {
               Online (Stateless)
             </div>
             <p className={`text-[11px] mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-              3 registered nutrition tools active
+              6 registered tools (NutriBalance + USDA)
             </p>
           </div>
         </div>
@@ -427,7 +427,21 @@ export const ApiHealthTab: React.FC<ApiHealthTabProps> = ({ theme }) => {
             <div>
               <strong className={isDark ? 'text-white' : 'text-slate-900'}>MCP Protocol Ping & Health Probe</strong>
               <p className={isDark ? 'text-slate-400' : 'text-slate-600'}>
-                Responds with 200 OK to JSON-RPC <code className="text-emerald-500 font-mono">{"{ method: 'ping' }"}</code> and health check query <code className="text-emerald-500 font-mono">GET /api/mcp?health</code> while preserving standard 405 Method Not Allowed for non-POST calls.
+                Responds with 200 OK to JSON-RPC <code className="text-emerald-500 font-mono">{"{ method: 'ping' }"}</code> and health check query <code className="text-emerald-500 font-mono">GET /api/mcp</code> while preserving standard 405 Method Not Allowed for non-POST calls.
+              </p>
+            </div>
+          </div>
+
+          <div
+            className={`p-3 rounded-xl border flex items-start space-x-2 md:col-span-2 ${
+              isDark ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
+            }`}
+          >
+            <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+            <div>
+              <strong className={isDark ? 'text-white' : 'text-slate-900'}>NutriBalance MCP Protocol Integration</strong>
+              <p className={isDark ? 'text-slate-400' : 'text-slate-600'}>
+                Exposes <code className="text-emerald-500 font-mono">nutribalance_get_daily_meal_structure</code>, <code className="text-emerald-500 font-mono">nutribalance_recommend_meals</code>, and <code className="text-emerald-500 font-mono">nutribalance_evaluate_balance</code> for clinical meal structuring and meal recommendations over Streamable HTTP at <code className="text-emerald-500 font-mono">/api/mcp</code>.
               </p>
             </div>
           </div>

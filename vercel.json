@@ -1,0 +1,33 @@
+{
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/health",
+      "destination": "/api/health.js"
+    },
+    {
+      "source": "/api/mcp",
+      "destination": "/api/mcp.js"
+    },
+    {
+      "source": "/api/nutrition/search",
+      "destination": "/api/nutrition/search.js"
+    },
+    {
+      "source": "/api/nutrition/details",
+      "destination": "/api/nutrition/details.js"
+    },
+    {
+      "source": "/api/nutrition/alternatives",
+      "destination": "/api/nutrition/alternatives.js"
+    },
+    {
+      "source": "/api/recommend-plan",
+      "destination": "/api/recommend-plan.js"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

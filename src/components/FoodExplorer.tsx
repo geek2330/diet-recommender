@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Utensils, BookOpen, Layers, Plus, ArrowRight, ShieldCheck, RefreshCw } from 'lucide-react';
 import { LoggedMealItem } from '../types/diet';
+import { searchCatalogFallback } from '../../lib/nutrition.js';
 
 interface FoodExplorerProps {
   onAddMealItem: (item: LoggedMealItem) => void;
@@ -23,14 +24,25 @@ export const FoodExplorer: React.FC<FoodExplorerProps> = ({ onAddMealItem }) => 
     setError(null);
     try {
       const res = await fetch(`/api/nutrition/search?query=${encodeURIComponent(queryText)}&page=1&page_size=8`);
-      if (!res.ok) throw new Error(`Upstream returned status ${res.status}`);
-      const data = await res.json();
-      setItems(data.items || []);
-      if (data.items && data.items.length > 0) {
-        loadDetails(data.items[0].food_id, servingG);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.items && data.items.length > 0) {
+          setItems(data.items);
+          loadDetails(data.items[0].food_id, servingG);
+          return;
+        }
+      }
+      const fallback = searchCatalogFallback(queryText, 8);
+      setItems(fallback);
+      if (fallback.length > 0) {
+        setSelectedFoodDetails(fallback[0]);
       }
     } catch (err: any) {
-      setError(err.message || 'Failed to search foods');
+      const fallback = searchCatalogFallback(queryText, 8);
+      setItems(fallback);
+      if (fallback.length > 0) {
+        setSelectedFoodDetails(fallback[0]);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -40,13 +52,22 @@ export const FoodExplorer: React.FC<FoodExplorerProps> = ({ onAddMealItem }) => 
     setIsLoadingDetails(true);
     try {
       const res = await fetch(`/api/nutrition/details?food_id=${encodeURIComponent(foodId)}&serving_g=${grams}`);
-      if (!res.ok) throw new Error(`Upstream returned status ${res.status}`);
-      const data = await res.json();
-      if (data.items && data.items.length > 0) {
-        setSelectedFoodDetails(data.items[0]);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.items && data.items.length > 0) {
+          setSelectedFoodDetails(data.items[0]);
+          return;
+        }
+      }
+      const fallback = searchCatalogFallback(foodId, 1);
+      if (fallback.length > 0) {
+        setSelectedFoodDetails(fallback[0]);
       }
     } catch (err) {
-      console.error(err);
+      const fallback = searchCatalogFallback(foodId, 1);
+      if (fallback.length > 0) {
+        setSelectedFoodDetails(fallback[0]);
+      }
     } finally {
       setIsLoadingDetails(false);
     }

@@ -1,0 +1,6 @@
+{
+  "name": "NutriGuide AI - Diet Recommender & MCP Hub",
+  "description": "Personalized diet recommender with BMR/TDEE calculation, daily calorie & water trackers, meal planning, and Streamable HTTP MCP nutrition server.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

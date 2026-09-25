@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import mcpHandler from './api/mcp.js';
+import healthHandler from './api/health.js';
 import { searchFoods, getFoodNutrition, findFoodAlternatives } from './lib/nutrition.js';
 import { GoogleGenAI } from '@google/genai';
 
@@ -16,6 +17,16 @@ async function startServer() {
   const port = parseInt(process.env.PORT || '3000', 10);
 
   app.use(express.json());
+
+  // Dedicated API Health Check routes (returning 200 OK with positive health status)
+  app.get('/api/health', healthHandler);
+  app.head('/api/health', healthHandler);
+  app.get('/health', healthHandler);
+  app.head('/health', healthHandler);
+  app.get('/api/healthz', healthHandler);
+  app.get('/healthz', healthHandler);
+  app.get('/api/status', healthHandler);
+  app.get('/api/ping', healthHandler);
 
   // Register MCP handler directly from api/mcp.js
   app.post('/api/mcp', mcpHandler);
